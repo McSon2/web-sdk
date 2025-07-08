@@ -8,12 +8,30 @@
 
 <script lang="ts">
 	import { StoryPixiApp } from 'components-storybook';
+	import { onMount } from 'svelte';
 	
 	import Monster from '../components/Monster.svelte';
 	import assets from '../game/assets';
-	import { setContext } from '../game/context';
+	import { setContext, getContext } from '../game/context';
 	
+	// Configuration du contexte pour Storybook
 	setContext();
+	const context = getContext();
+	
+	// Debug: Vérifions ce qui se passe
+	let debugInfo = $state('Initializing...');
+	
+	onMount(() => {
+		const checkAssets = () => {
+			if (context.stateApp?.loadedAssets) {
+				debugInfo = `Assets loaded: ${Object.keys(context.stateApp.loadedAssets).join(', ')}`;
+			} else {
+				debugInfo = `Assets not loaded yet. stateApp: ${context.stateApp ? 'exists' : 'null'}`;
+				setTimeout(checkAssets, 500);
+			}
+		};
+		checkAssets();
+	});
 </script>
 
 <Story name="Goblin Small">
@@ -30,6 +48,10 @@
 				x={400}
 				y={400}
 			/>
+			<!-- Debug info -->
+			<div style="position: absolute; top: 10px; left: 10px; color: white; font-size: 12px; background: rgba(0,0,0,0.5); padding: 5px;">
+				Debug: {debugInfo}
+			</div>
 		</StoryPixiApp>
 	{/snippet}
 </Story>
@@ -46,7 +68,7 @@
 				damage={18}
 				reward={2}
 				x={400}
-				y={400}
+				y={500}
 			/>
 		</StoryPixiApp>
 	{/snippet}
@@ -64,7 +86,7 @@
 				damage={30}
 				reward={3}
 				x={400}
-				y={400}
+				y={500}
 			/>
 		</StoryPixiApp>
 	{/snippet}
@@ -82,7 +104,7 @@
 				damage={10}
 				reward={1}
 				x={400}
-				y={400}
+				y={500}
 			/>
 		</StoryPixiApp>
 	{/snippet}

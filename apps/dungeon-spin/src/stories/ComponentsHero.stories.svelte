@@ -18,6 +18,27 @@
 	setContext();
 	const context = getContext();
 	
+	// Override position and scale for better Storybook display
+	const centerHero = () => {
+		if (context.eventEmitter) {
+			context.eventEmitter.broadcast({ 
+				type: 'heroMove', 
+				x: 400, // Center horizontally (800/2)
+				y: 550  // Center vertically (considering anchor is bottom-center)
+			});
+		}
+	};
+	
+	const scaleHero = () => {
+		if (context.eventEmitter) {
+			context.eventEmitter.broadcast({ 
+				type: 'heroSetScale', 
+				x: 0.5, // Reduce to 50% size
+				y: 0.5
+			});
+		}
+	};
+	
 	// Debug: Vérifions ce qui se passe
 	let debugInfo = $state('Initializing...');
 	
@@ -25,6 +46,9 @@
 		const checkAssets = () => {
 			if (context.stateApp?.loadedAssets) {
 				debugInfo = `Assets loaded: ${Object.keys(context.stateApp.loadedAssets).join(', ')}`;
+				// Center and scale hero once assets are loaded
+				setTimeout(centerHero, 100);
+				setTimeout(scaleHero, 200);
 			} else {
 				debugInfo = `Assets not loaded yet. stateApp: ${context.stateApp ? 'exists' : 'null'}`;
 				setTimeout(checkAssets, 500);
@@ -52,6 +76,9 @@
 			<Hero />
 			{#if context.eventEmitter}
 				{onMount(() => {
+					// Center and scale hero for attack story
+					setTimeout(centerHero, 100);
+					setTimeout(scaleHero, 200);
 					setTimeout(() => {
 						context.eventEmitter.broadcast({ type: 'heroSetState', state: 'attack' });
 					}, 1000);

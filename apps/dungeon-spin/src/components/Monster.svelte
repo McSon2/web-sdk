@@ -158,12 +158,17 @@
 	});
 	
 	// Calcul du sprite à afficher selon le type, la taille et l'état
-	const spriteTexture = $derived(() => {
+	const spriteTexture = $derived.by(() => {
+		// Vérifier que les assets sont chargés
+		if (!context.stateApp?.loadedAssets) {
+			return null;
+		}
+		
 		// Sélectionner le bon asset selon le type de monstre et son état
 		const assetKey = currentState === 'attack' 
 			? config.assets.monsters[monsterType].attack
 			: config.assets.monsters[monsterType].idle;
-			
+		
 		return assetKey;
 	});
 	
@@ -180,8 +185,8 @@
 </script>
 
 {#if show}
-	<Container x={position.x} y={position.y} scale={monsterScale}>
-		{#if spriteTexture && context.stateApp?.loadedAssets?.[spriteTexture]}
+	<Container x={position.x} y={position.y} scale={scale}>
+		{#if spriteTexture}
 			<Sprite
 				key={spriteTexture}
 				anchor={{ x: 0.5, y: 1 }}

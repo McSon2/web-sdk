@@ -46,6 +46,16 @@
 					const { type, src } = context.stateApp.assets![key];
 					const loadSrc =
 						type === 'spine' ? Object.values(src).filter((item) => typeof item === 'string') : src;
+					
+					// Check if asset is already loaded in PIXI cache to avoid warnings
+					const cacheKey = Array.isArray(loadSrc) ? loadSrc[0] : loadSrc;
+					if (PIXI.Assets.cache.has(cacheKey)) {
+						// Asset already loaded, get from cache
+						const rawAsset = PIXI.Assets.cache.get(cacheKey);
+						const processed = getProcessed({ key, rawAsset, type, src });
+						return processed;
+					}
+					
 					const rawAsset = await PIXI.Assets.load<RawAsset>(loadSrc, onProgress);
 					const processed = getProcessed({ key, rawAsset, type, src });
 					return processed;

@@ -53,7 +53,7 @@
 			if (allMonstersDead && heroAlive) {
 				// Victoire du héros
 				setTimeout(() => {
-					context.eventEmitter.emit({
+					context.eventEmitter.broadcast({
 						type: 'combatEnd',
 						roomNumber,
 						victory: true
@@ -63,7 +63,7 @@
 			} else if (!heroAlive) {
 				// Défaite du héros
 				setTimeout(() => {
-					context.eventEmitter.emit({
+					context.eventEmitter.broadcast({
 						type: 'combatEnd',
 						roomNumber,
 						victory: false
@@ -79,7 +79,7 @@
 		currentTurn = 'hero';
 		roundCount = 0;
 		
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'combatStart',
 			roomNumber
 		});
@@ -99,7 +99,7 @@
 	function startTurn() {
 		if (!combatActive) return;
 		
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'combatTurn',
 			currentTurn
 		});
@@ -121,12 +121,12 @@
 		const targetMonster = aliveMonsters[Math.floor(Math.random() * aliveMonsters.length)];
 		
 		// Animation d'attaque du héros
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'heroSetState',
 			state: 'attack'
 		});
 		
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'heroAttack',
 			targetMonsterId: targetMonster.id
 		});
@@ -135,7 +135,7 @@
 		setTimeout(() => {
 			const newHealth = Math.max(0, targetMonster.health - context.stateGame.hero.damage);
 			
-			context.eventEmitter.emit({
+			context.eventEmitter.broadcast({
 				type: 'monsterTakeDamage',
 				monsterId: targetMonster.id,
 				damage: context.stateGame.hero.damage,
@@ -143,13 +143,13 @@
 			});
 			
 			if (newHealth <= 0) {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'monsterSetState',
 					monsterId: targetMonster.id,
 					state: 'death'
 				});
 			} else {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'monsterSetState',
 					monsterId: targetMonster.id,
 					state: 'hurt'
@@ -158,13 +158,13 @@
 			
 			// Retour à l'état idle après l'attaque
 			setTimeout(() => {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'heroSetState',
 					state: 'idle'
 				});
 				
 				if (newHealth > 0) {
-					context.eventEmitter.emit({
+					context.eventEmitter.broadcast({
 						type: 'monsterSetState',
 						monsterId: targetMonster.id,
 						state: 'idle'
@@ -185,13 +185,13 @@
 		const attacker = aliveMonsters[Math.floor(Math.random() * aliveMonsters.length)];
 		
 		// Animation d'attaque du monstre
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'monsterSetState',
 			monsterId: attacker.id,
 			state: 'attack'
 		});
 		
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'monsterAttack',
 			monsterId: attacker.id,
 			targetType: 'hero'
@@ -201,19 +201,19 @@
 		setTimeout(() => {
 			const newHealth = Math.max(0, context.stateGame.hero.health - attacker.damage);
 			
-			context.eventEmitter.emit({
+			context.eventEmitter.broadcast({
 				type: 'heroTakeDamage',
 				damage: attacker.damage,
 				newHealth
 			});
 			
 			if (newHealth <= 0) {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'heroSetState',
 					state: 'death'
 				});
 			} else {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'heroSetState',
 					state: 'hurt'
 				});
@@ -221,14 +221,14 @@
 			
 			// Retour à l'état idle après l'attaque
 			setTimeout(() => {
-				context.eventEmitter.emit({
+				context.eventEmitter.broadcast({
 					type: 'monsterSetState',
 					monsterId: attacker.id,
 					state: 'idle'
 				});
 				
 				if (newHealth > 0) {
-					context.eventEmitter.emit({
+					context.eventEmitter.broadcast({
 						type: 'heroSetState',
 						state: 'idle'
 					});

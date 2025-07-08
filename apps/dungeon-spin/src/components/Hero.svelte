@@ -8,6 +8,7 @@
 		| { type: 'heroTakeDamage'; damage: number; newHealth: number }
 		| { type: 'heroAttack'; targetMonsterId: string }
 		| { type: 'heroMove'; x: number; y: number }
+		| { type: 'heroSetScale'; x: number; y: number }
 		| { type: 'heroReset' };
 </script>
 
@@ -102,6 +103,11 @@
 			position.y = emitterEvent.y;
 		},
 		
+		heroSetScale: (emitterEvent) => {
+			scale.x = emitterEvent.x;
+			scale.y = emitterEvent.y;
+		},
+		
 		heroReset: () => {
 			currentState = 'idle';
 			position = { x: config.positions.hero.x, y: config.positions.hero.y };
@@ -112,44 +118,31 @@
 	});
 	
 	// Calcul du sprite à afficher selon l'état
-	const spriteTexture = $derived(() => {
-		// Debug logs temporaires
-		console.log('Hero spriteTexture calculation:', {
-			hasStateApp: !!context.stateApp,
-			hasLoadedAssets: !!context.stateApp?.loadedAssets,
-			loadedAssetKeys: context.stateApp?.loadedAssets ? Object.keys(context.stateApp.loadedAssets) : [],
-			currentState,
-			configAssetsHero: config.assets.hero
-		});
-		
-		let assetKey: string;
-		switch (currentState) {
-			case 'attack':
-				assetKey = config.assets.hero.attack;
-				break;
-			case 'hurt':
-				assetKey = config.assets.hero.hurt;
-				break;
-			case 'death':
-				assetKey = config.assets.hero.hurt; // Même sprite que hurt pour l'instant
-				break;
-			case 'victory':
-				assetKey = config.assets.hero.idle; // Même sprite que idle pour l'instant
-				break;
-			case 'idle':
-			default:
-				assetKey = config.assets.hero.idle;
-				break;
+	const spriteTexture = $derived.by(() => {
+		// Vérifier que les assets sont chargés
+		if (!context.stateApp?.loadedAssets) {
+			return null;
 		}
 		
-		console.log('Hero: Selected asset key:', assetKey, 'for state:', currentState);
-		return assetKey;
+		switch (currentState) {
+			case 'attack':
+				return config.assets.hero.attack;
+			case 'hurt':
+				return config.assets.hero.hurt;
+			case 'death':
+				return config.assets.hero.hurt; // Même sprite que hurt pour l'instant
+			case 'victory':
+				return config.assets.hero.idle; // Même sprite que idle pour l'instant
+			case 'idle':
+			default:
+				return config.assets.hero.idle;
+		}
 	});
 </script>
 
 {#if show}
 	<Container x={position.x} y={position.y} scale={scale}>
-		{#if spriteTexture && context.stateApp?.loadedAssets?.[spriteTexture]}
+		{#if spriteTexture}
 			<Sprite
 				key={spriteTexture}
 				anchor={{ x: 0.5, y: 1 }}
