@@ -17,12 +17,21 @@
 	import { getContext } from '../game/context';
 	import config from '../game/config';
 	
+	type Props = {
+		x?: number;
+		y?: number;
+	};
+	let { 
+		x = config.positions.hero.x, 
+		y = config.positions.hero.y 
+	}: Props = $props();
+	
 	const context = getContext();
 	
 	// État local du héros
 	let show = $state(true);
 	let currentState: CharacterState = $state('idle');
-	let position = $state({ x: config.positions.hero.x, y: config.positions.hero.y });
+	let position = $state({ x, y });
 	let scale = $state({ x: 1, y: 1 });
 	let tint = $state(0xffffff);
 	
@@ -110,7 +119,7 @@
 		
 		heroReset: () => {
 			currentState = 'idle';
-			position = { x: config.positions.hero.x, y: config.positions.hero.y };
+			position = { x, y };
 			scale = { x: 1, y: 1 };
 			tint = 0xffffff;
 			show = true;

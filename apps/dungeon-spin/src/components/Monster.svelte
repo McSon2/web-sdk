@@ -8,7 +8,9 @@
 		| { type: 'monsterTakeDamage'; monsterId: string; damage: number; newHealth: number }
 		| { type: 'monsterAttack'; monsterId: string; targetType: 'hero' }
 		| { type: 'monsterDeath'; monsterId: string; reward: number }
-		| { type: 'monsterReset'; monsterId: string };
+		| { type: 'monsterReset'; monsterId: string }
+		| { type: 'monsterMove'; monsterId: string; x: number; y: number }
+		| { type: 'monsterSetScale'; monsterId: string; x: number; y: number };
 
 	export interface MonsterProps {
 		id: string;
@@ -20,6 +22,7 @@
 		reward: number;
 		x?: number;
 		y?: number;
+		flipX?: boolean;
 	}
 </script>
 
@@ -38,7 +41,8 @@
 		damage,
 		reward,
 		x = config.positions.monsters[size].x,
-		y = config.positions.monsters[size].y
+		y = config.positions.monsters[size].y,
+		flipX = false
 	}: Props = $props();
 	
 	const context = getContext();
@@ -154,6 +158,20 @@
 				show = true;
 				health = maxHealth;
 			}
+		},
+		
+		monsterMove: (emitterEvent) => {
+			if (emitterEvent.monsterId === id) {
+				position.x = emitterEvent.x;
+				position.y = emitterEvent.y;
+			}
+		},
+		
+		monsterSetScale: (emitterEvent) => {
+			if (emitterEvent.monsterId === id) {
+				scale.x = emitterEvent.x;
+				scale.y = emitterEvent.y;
+			}
 		}
 	});
 	
@@ -172,27 +190,20 @@
 		return assetKey;
 	});
 	
-	// Calcul de l'échelle selon la taille du monstre
-	const monsterScale = $derived(() => {
-		const baseScale = scale;
-		const sizeMultiplier = size === 'small' ? 0.8 : size === 'medium' ? 1.0 : 1.3;
-		
-		return {
-			x: baseScale.x * sizeMultiplier,
-			y: baseScale.y * sizeMultiplier
-		};
-	});
 </script>
 
 {#if show}
 	<Container x={position.x} y={position.y} scale={scale}>
-		{#if spriteTexture}
-			<Sprite
-				key={spriteTexture}
-				anchor={{ x: 0.5, y: 1 }}
-				{tint}
-			/>
-		{/if}
+		<!-- Container pour le flip -->
+		<Container scale={{ x: flipX ? -1 : 1, y: 1 }}>
+			{#if spriteTexture}
+				<Sprite
+					key={spriteTexture}
+					anchor={{ x: 0.5, y: 1 }}
+					{tint}
+				/>
+			{/if}
+		</Container>
 		
 		<!-- Barre de vie au-dessus du monstre (seulement si blessé) -->
 		{#if health < maxHealth && health > 0}

@@ -8,6 +8,7 @@
 
 <script lang="ts">
 	import { StoryPixiApp } from 'components-storybook';
+	import { Container } from 'pixi-svelte';
 	
 	import assets from '../game/assets';
 	import { setContext } from '../game/context';
@@ -40,21 +41,25 @@
 			<!-- Arrière-plan -->
 			<Dungeon />
 			
-			<!-- Héros -->
-			<Hero />
-			
-			<!-- Monstre -->
-			<Monster
-				id="goblin-1"
-				monsterType="goblin"
-				size="small"
-				health={30}
-				maxHealth={30}
-				damage={10}
-				reward={1}
-				x={600}
-				y={420}
-			/>
+			<!-- Container avec échelle pour le contenu du combat -->
+			<Container scale={{ x: 0.3, y: 0.3 }}>
+				<!-- Héros avec position personnalisée -->
+				<Hero x={600} y={1620} />
+				
+				<!-- Monstre (retourné pour faire face au héros) -->
+				<Monster
+					id="goblin-1"
+					monsterType="goblin"
+					size="small"
+					health={30}
+					maxHealth={30}
+					damage={10}
+					reward={1}
+					x={1500}
+					y={1680}
+					flipX={true}
+				/>
+			</Container>
 			
 			<!-- Système de combat -->
 			<Combat
@@ -72,21 +77,25 @@
 			<!-- Arrière-plan -->
 			<Dungeon />
 			
-			<!-- Héros -->
-			<Hero />
-			
-			<!-- Monstre -->
-			<Monster
-				id="orc-1"
-				monsterType="orc"
-				size="medium"
-				health={80}
-				maxHealth={80}
-				damage={18}
-				reward={2}
-				x={580}
-				y={380}
-			/>
+			<!-- Container avec échelle pour le contenu du combat -->
+			<Container scale={{ x: 0.3, y: 0.3 }}>
+				<!-- Héros avec position personnalisée -->
+				<Hero x={600} y={1620} />
+				
+				<!-- Monstre (retourné pour faire face au héros) -->
+				<Monster
+					id="orc-1"
+					monsterType="orc"
+					size="medium"
+					health={80}
+					maxHealth={80}
+					damage={18}
+					reward={2}
+					x={1500}
+					y={1680}
+					flipX={true}
+				/>
+			</Container>
 			
 			<!-- Système de combat -->
 			<Combat
