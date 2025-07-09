@@ -41,22 +41,10 @@
 		}
 	};
 	
-	// Debug: Vérifions ce qui se passe
-	let debugInfo = $state('Initializing...');
-	
 	onMount(() => {
-		const checkAssets = () => {
-			if (context.stateApp?.loadedAssets) {
-				debugInfo = `Assets loaded: ${Object.keys(context.stateApp.loadedAssets).join(', ')}`;
-				// Center and scale monsters once assets are loaded
-				setTimeout(() => centerMonster('goblin-idle'), 100);
-				setTimeout(() => scaleMonster('goblin-idle'), 200);
-			} else {
-				debugInfo = `Assets not loaded yet. stateApp: ${context.stateApp ? 'exists' : 'null'}`;
-				setTimeout(checkAssets, 500);
-			}
-		};
-		checkAssets();
+		// Center and scale monsters once assets are loaded
+		setTimeout(() => centerMonster('goblin-idle'), 100);
+		setTimeout(() => scaleMonster('goblin-idle'), 200);
 	});
 </script>
 
@@ -74,10 +62,6 @@
 				x={400}
 				y={400}
 			/>
-			<!-- Debug info -->
-			<div style="position: absolute; top: 10px; left: 10px; color: white; font-size: 12px; background: rgba(0,0,0,0.5); padding: 5px;">
-				Debug: {debugInfo}
-			</div>
 		</StoryPixiApp>
 	{/snippet}
 </Story>

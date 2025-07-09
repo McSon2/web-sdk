@@ -128,7 +128,7 @@
 				
 				// Vérifier si le monstre est mort
 				if (health <= 0) {
-					context.eventEmitter.emit({
+					context.eventEmitter.broadcast({
 						type: 'monsterDeath',
 						monsterId: id,
 						reward

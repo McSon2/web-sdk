@@ -5,9 +5,15 @@
 	
 	interface Props {
 		onloaded: () => void;
+		canvasWidth?: number;
+		canvasHeight?: number;
 	}
 	
-	const { onloaded }: Props = $props();
+	const { 
+		onloaded,
+		canvasWidth = config.canvas.width,
+		canvasHeight = config.canvas.height 
+	}: Props = $props();
 	const context = getContext();
 	
 	// Simule le chargement
@@ -42,8 +48,8 @@
 	<!-- Fond noir -->
 	<Sprite
 		texture="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
-		width={config.canvas.width}
-		height={config.canvas.height}
+		width={canvasWidth}
+		height={canvasHeight}
 		anchor={{ x: 0, y: 0 }}
 		tint={0x000000}
 		interactive={true}
@@ -54,8 +60,8 @@
 	<Text
 		text="⚔️ DUNGEON SPIN ⚔️"
 		anchor={{ x: 0.5, y: 0.5 }}
-		x={config.canvas.width / 2}
-		y={config.canvas.height / 2 - 100}
+		x={canvasWidth / 2}
+		y={canvasHeight / 2 - 100}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 48,
@@ -69,8 +75,8 @@
 	<Text
 		text="Where every spin is a quest!"
 		anchor={{ x: 0.5, y: 0.5 }}
-		x={config.canvas.width / 2}
-		y={config.canvas.height / 2 - 50}
+		x={canvasWidth / 2}
+		y={canvasHeight / 2 - 50}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 24,
@@ -80,7 +86,7 @@
 	/>
 	
 	<!-- Barre de progression -->
-	<Container x={config.canvas.width / 2 - 150} y={config.canvas.height / 2 + 50}>
+	<Container x={canvasWidth / 2 - 150} y={canvasHeight / 2 + 50}>
 		<!-- Fond de la barre -->
 		<Sprite
 			texture="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
@@ -104,8 +110,8 @@
 	<Text
 		text={loadingText}
 		anchor={{ x: 0.5, y: 0.5 }}
-		x={config.canvas.width / 2}
-		y={config.canvas.height / 2 + 100}
+		x={canvasWidth / 2}
+		y={canvasHeight / 2 + 100}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 18,
@@ -118,8 +124,8 @@
 	<Text
 		text={`${Math.floor(loadingProgress)}%`}
 		anchor={{ x: 0.5, y: 0.5 }}
-		x={config.canvas.width / 2}
-		y={config.canvas.height / 2 + 130}
+		x={canvasWidth / 2}
+		y={canvasHeight / 2 + 130}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 14,

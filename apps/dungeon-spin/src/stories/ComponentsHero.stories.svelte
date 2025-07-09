@@ -39,22 +39,10 @@
 		}
 	};
 	
-	// Debug: Vérifions ce qui se passe
-	let debugInfo = $state('Initializing...');
-	
 	onMount(() => {
-		const checkAssets = () => {
-			if (context.stateApp?.loadedAssets) {
-				debugInfo = `Assets loaded: ${Object.keys(context.stateApp.loadedAssets).join(', ')}`;
-				// Center and scale hero once assets are loaded
-				setTimeout(centerHero, 100);
-				setTimeout(scaleHero, 200);
-			} else {
-				debugInfo = `Assets not loaded yet. stateApp: ${context.stateApp ? 'exists' : 'null'}`;
-				setTimeout(checkAssets, 500);
-			}
-		};
-		checkAssets();
+		// Center and scale hero once assets are loaded
+		setTimeout(centerHero, 100);
+		setTimeout(scaleHero, 200);
 	});
 </script>
 
@@ -62,10 +50,6 @@
 	{#snippet template()}
 		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
 			<Hero />
-			<!-- Debug info -->
-			<div style="position: absolute; top: 10px; left: 10px; color: white; font-size: 12px; background: rgba(0,0,0,0.5); padding: 5px;">
-				Debug: {debugInfo}
-			</div>
 		</StoryPixiApp>
 	{/snippet}
 </Story>

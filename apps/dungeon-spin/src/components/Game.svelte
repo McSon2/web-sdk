@@ -4,7 +4,7 @@
 	import { EnablePixiExtension } from 'components-pixi';
 	import { EnableHotkey } from 'components-shared';
 	import { MainContainer } from 'components-layout';
-	import { App, Text, REM } from 'pixi-svelte';
+	import { App, Text, REM, Container } from 'pixi-svelte';
 	import { stateModal } from 'state-shared';
 	
 	import { UI, UiGameName } from 'components-ui-pixi';
@@ -19,6 +19,18 @@
 	import GameUI from './GameUI.svelte';
 	import config from '../game/config';
 	import type { Monster as MonsterType } from '../game/types';
+	
+	type Props = {
+		skipLoadingScreen?: boolean;
+		canvasWidth?: number;
+		canvasHeight?: number;
+	};
+	
+	let { 
+		skipLoadingScreen = false,
+		canvasWidth = config.canvas.width,
+		canvasHeight = config.canvas.height 
+	}: Props = $props();
 	
 	const context = getContext();
 	
@@ -82,7 +94,7 @@
 		roomMonsters = generateRoomMonsters(roomNumber);
 		combatActive = true;
 		
-		context.eventEmitter.emit({
+		context.eventEmitter.broadcast({
 			type: 'enterRoom',
 			roomNumber,
 			monsters: roomMonsters,
@@ -108,7 +120,7 @@
 	});
 	
 	onMount(() => {
-		context.stateLayout.showLoadingScreen = true;
+		context.stateLayout.showLoadingScreen = !skipLoadingScreen;
 		
 		// Démarrer la première salle après le chargement
 		setTimeout(() => {
@@ -124,29 +136,35 @@
 	<EnablePixiExtension />
 	
 	<!-- Arrière-plan du donjon -->
-	<Dungeon />
+	<Dungeon {canvasWidth} {canvasHeight} />
 	
 	{#if context.stateLayout.showLoadingScreen}
-		<LoadingScreen onloaded={() => (context.stateLayout.showLoadingScreen = false)} />
+		<LoadingScreen onloaded={() => (context.stateLayout.showLoadingScreen = false)} {canvasWidth} {canvasHeight} />
 	{:else}
 		<MainContainer>
-			<!-- Héros -->
-			<Hero />
+			<!-- Héros avec échelle personnalisée plus grande -->
+			<Container scale={{ x: 1, y: 1 }}>
+				<Hero x={380} y={560} />
+			</Container>
 			
-			<!-- Monstres de la salle actuelle -->
-			{#each roomMonsters as monster (monster.id)}
-				<Monster
-					id={monster.id}
-					monsterType={monster.type}
-					size={monster.size}
-					bind:health={monster.health}
-					maxHealth={monster.maxHealth}
-					damage={monster.damage}
-					reward={monster.reward}
-					x={monster.position.x}
-					y={monster.position.y}
-				/>
-			{/each}
+			<!-- Container avec échelle pour les monstres -->
+			<Container scale={{ x: 0.3, y: 0.3 }}>
+				<!-- Monstres de la salle actuelle -->
+				{#each roomMonsters as monster (monster.id)}
+					<Monster
+						id={monster.id}
+						monsterType={monster.type}
+						size={monster.size}
+						bind:health={monster.health}
+						maxHealth={monster.maxHealth}
+						damage={monster.damage}
+						reward={monster.reward}
+						x={2100}
+						y={2000}
+						flipX={true}
+					/>
+				{/each}
+			</Container>
 			
 			<!-- Système de combat -->
 			<Combat

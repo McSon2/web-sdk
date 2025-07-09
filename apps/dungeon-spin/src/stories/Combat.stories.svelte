@@ -37,9 +37,9 @@
 
 <Story name="Combat Room 1">
 	{#snippet template()}
-		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
+		<StoryPixiApp {assets} background="#1a1a2e" width={1200} height={675}>
 			<!-- Arrière-plan -->
-			<Dungeon />
+			<Dungeon canvasWidth={1200} canvasHeight={675} />
 			
 			<!-- Container avec échelle pour les monstres -->
 			<Container scale={{ x: 0.3, y: 0.3 }}>
@@ -52,15 +52,15 @@
 					maxHealth={30}
 					damage={10}
 					reward={1}
-					x={1500}
-					y={1780}
+					x={2100}
+					y={2000}
 					flipX={true}
 				/>
 			</Container>
 			
 			<!-- Héros avec échelle personnalisée plus grande -->
 			<Container scale={{ x: 1, y: 1 }}>
-				<Hero x={200} y={500} />
+				<Hero x={380} y={560} />
 			</Container>
 			
 			<!-- Système de combat -->

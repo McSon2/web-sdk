@@ -15,12 +15,13 @@
 	
 	// Configuration du contexte pour Storybook
 	setContext();
+	
 </script>
 
 <Story name="Background">
 	{#snippet template()}
 		<StoryPixiApp {assets} background="#1a1a2e" width={1200} height={675}>
-			<Dungeon />
+			<Dungeon canvasWidth={1200} canvasHeight={675} />
 		</StoryPixiApp>
 	{/snippet}
 </Story>
