@@ -13,7 +13,8 @@
 </script>
 
 <script lang="ts">
-	import { Container, Sprite } from 'pixi-svelte';
+	import { Container, Sprite, AnimatedSprite } from 'pixi-svelte';
+	import * as PIXI from 'pixi.js';
 	import { getContext } from '../game/context';
 	import config from '../game/config';
 	
@@ -50,6 +51,10 @@
 			
 			// Effets visuels selon l'état
 			switch (emitterEvent.state) {
+				case 'walk':
+					// Animation de marche - pas d'effet spécial, juste l'animation
+					break;
+					
 				case 'attack':
 					// Animation d'attaque - légère avancée
 					position.x += 20;
@@ -59,13 +64,9 @@
 					break;
 					
 				case 'hurt':
-					// Animation de recul avec tint rouge
+					// Animation de recul avec tint rouge (sans effet de mouvement pour Storybook)
 					tint = 0xff6666;
-					position.x -= 10;
-					setTimeout(() => {
-						position.x += 10;
-						tint = 0xffffff;
-					}, config.animation.hurtDuration);
+					// Pas d'effet de mouvement pour ne pas perturber l'animation
 					break;
 					
 				case 'death':
@@ -126,36 +127,111 @@
 		},
 	});
 	
-	// Calcul du sprite à afficher selon l'état
-	const spriteTexture = $derived.by(() => {
-		// Vérifier que les assets sont chargés
-		if (!context.stateApp?.loadedAssets) {
-			return null;
-		}
-		
+	// Calcul de l'animation à utiliser selon l'état
+	const animationName = $derived.by(() => {
 		switch (currentState) {
+			case 'walk':
+				return 'hero_walk';
 			case 'attack':
-				return config.assets.hero.attack;
+				return 'hero_attack';
 			case 'hurt':
-				return config.assets.hero.hurt;
+				return 'hero_hurt';
 			case 'death':
-				return config.assets.hero.hurt; // Même sprite que hurt pour l'instant
+				return 'hero_hurt'; // Même animation que hurt pour l'instant
 			case 'victory':
-				return config.assets.hero.idle; // Même sprite que idle pour l'instant
+				return 'hero_idle'; // Même animation que idle pour l'instant
 			case 'idle':
 			default:
-				return config.assets.hero.idle;
+				return 'hero_idle';
 		}
+	});
+	
+	// Récupération des textures d'animation depuis le spritesheet
+	const animationTextures = $derived.by(() => {
+		if (!context.stateApp?.loadedAssets?.heroSpritesheetFull) {
+			return [];
+		}
+		
+		const fullTexture = context.stateApp.loadedAssets.heroSpritesheetFull as PIXI.Texture;
+		
+		// Calculer la taille des frames basée sur la taille totale de la texture
+		const totalWidth = fullTexture.width;
+		const totalHeight = fullTexture.height;
+		const frameWidth = Math.floor(totalWidth / 4) - 10; // 4 colonnes avec marge
+		const frameHeight = Math.floor(totalHeight / 4); // 4 lignes
+		
+		console.log('Texture dimensions:', { totalWidth, totalHeight, frameWidth, frameHeight });
+		
+		// Calculer la ligne selon l'animation
+		let row = 0;
+		switch (animationName) {
+			case 'hero_idle':
+				row = 0; // Ligne 0 (idle)
+				break;
+			case 'hero_walk':
+				row = 1; // Ligne 1 (walk)
+				break;
+			case 'hero_attack':
+				row = 2; // Ligne 2 (attack)
+				break;
+			case 'hero_hurt':
+				row = 3; // Ligne 3 (hurt)
+				break;
+		}
+		
+		// Créer les frames selon le type d'animation
+		const frames: PIXI.Texture[] = [];
+		
+		if (animationName === 'hero_idle') {
+			// Pour idle, seulement la première frame (pas d'animation)
+			const rect = new PIXI.Rectangle(
+				0 * (frameWidth + 1), // Même logique de marge
+				row * frameHeight,
+				frameWidth,
+				frameHeight
+			);
+			const frameTexture = new PIXI.Texture({
+				source: fullTexture.source,
+				frame: rect
+			});
+			frames.push(frameTexture);
+		} else {
+			// Pour les autres animations, créer les 4 frames de la ligne
+			for (let col = 0; col < 4; col++) {
+				const rect = new PIXI.Rectangle(
+					col * (frameWidth + 1), // Ajouter 1 pixel de marge entre frames
+					row * frameHeight,
+					frameWidth,
+					frameHeight
+				);
+				const frameTexture = new PIXI.Texture({
+					source: fullTexture.source,
+					frame: rect
+				});
+				frames.push(frameTexture);
+			}
+		}
+		
+		return frames;
 	});
 </script>
 
 {#if show}
 	<Container x={position.x} y={position.y} scale={scale}>
-		{#if spriteTexture}
-			<Sprite
-				key={spriteTexture}
+		{#if animationTextures.length > 0}
+			<AnimatedSprite
+				textures={animationTextures}
 				anchor={{ x: 0.5, y: 1 }}
 				{tint}
+				animationSpeed={0.1}
+				loop={animationTextures.length > 1}
+				play={animationTextures.length > 1}
+				onComplete={() => {
+					// Empêcher le retour automatique à idle pour certains états
+					if (currentState === 'hurt' || currentState === 'attack' || currentState === 'walk') {
+						// Ne rien faire, garder l'état actuel
+					}
+				}}
 			/>
 		{/if}
 		

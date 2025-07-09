@@ -1,0 +1,146 @@
+{
+  "frames": {
+    "hero_idle_0": {
+      "frame": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_idle_1": {
+      "frame": {"x": 64, "y": 0, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_idle_2": {
+      "frame": {"x": 128, "y": 0, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_idle_3": {
+      "frame": {"x": 192, "y": 0, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_walk_0": {
+      "frame": {"x": 0, "y": 64, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_walk_1": {
+      "frame": {"x": 64, "y": 64, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_walk_2": {
+      "frame": {"x": 128, "y": 64, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_walk_3": {
+      "frame": {"x": 192, "y": 64, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_attack_0": {
+      "frame": {"x": 0, "y": 128, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_attack_1": {
+      "frame": {"x": 64, "y": 128, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_attack_2": {
+      "frame": {"x": 128, "y": 128, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_attack_3": {
+      "frame": {"x": 192, "y": 128, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_hurt_0": {
+      "frame": {"x": 0, "y": 192, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_hurt_1": {
+      "frame": {"x": 64, "y": 192, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_hurt_2": {
+      "frame": {"x": 128, "y": 192, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    },
+    "hero_hurt_3": {
+      "frame": {"x": 192, "y": 192, "w": 64, "h": 64},
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {"x": 0, "y": 0, "w": 64, "h": 64},
+      "sourceSize": {"w": 64, "h": 64},
+      "pivot": {"x": 0.5, "y": 1}
+    }
+  },
+  "animations": {
+    "hero_idle": ["hero_idle_0", "hero_idle_1", "hero_idle_2", "hero_idle_3"],
+    "hero_walk": ["hero_walk_0", "hero_walk_1", "hero_walk_2", "hero_walk_3"],
+    "hero_attack": ["hero_attack_0", "hero_attack_1", "hero_attack_2", "hero_attack_3"],
+    "hero_hurt": ["hero_hurt_0", "hero_hurt_1", "hero_hurt_2", "hero_hurt_3"]
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "spriteshet_hero.png",
+    "format": "RGBA8888",
+    "size": {"w": 256, "h": 256},
+    "scale": "1"
+  }
+}

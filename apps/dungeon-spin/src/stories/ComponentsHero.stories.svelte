@@ -70,6 +70,24 @@
 	{/snippet}
 </Story>
 
+<Story name="walk">
+	{#snippet template()}
+		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
+			<Hero />
+			{#if context.eventEmitter}
+				{onMount(() => {
+					// Center and scale hero for walk story
+					setTimeout(centerHero, 100);
+					setTimeout(scaleHero, 200);
+					setTimeout(() => {
+						context.eventEmitter.broadcast({ type: 'heroSetState', state: 'walk' });
+					}, 1000);
+				})}
+			{/if}
+		</StoryPixiApp>
+	{/snippet}
+</Story>
+
 <Story name="attack">
 	{#snippet template()}
 		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
@@ -81,6 +99,24 @@
 					setTimeout(scaleHero, 200);
 					setTimeout(() => {
 						context.eventEmitter.broadcast({ type: 'heroSetState', state: 'attack' });
+					}, 1000);
+				})}
+			{/if}
+		</StoryPixiApp>
+	{/snippet}
+</Story>
+
+<Story name="hurt">
+	{#snippet template()}
+		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
+			<Hero />
+			{#if context.eventEmitter}
+				{onMount(() => {
+					// Center and scale hero for hurt story
+					setTimeout(centerHero, 100);
+					setTimeout(scaleHero, 200);
+					setTimeout(() => {
+						context.eventEmitter.broadcast({ type: 'heroSetState', state: 'hurt' });
 					}, 1000);
 				})}
 			{/if}

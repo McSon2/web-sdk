@@ -16,7 +16,14 @@ export default {
 		preload: true,
 	},
 
-	// Héros
+	// Héros - Spritesheet complet
+	heroSpritesheetFull: {
+		type: 'sprite',
+		src: getAssetPath('../../assets/sprites/spriteshet_hero.png'),
+		preload: true,
+	},
+	
+	// Héros - Assets individuels (gardés pour compatibilité)
 	heroIdle: {
 		type: 'sprite',
 		src: getAssetPath('../../assets/sprites/hero_idle.png'),
