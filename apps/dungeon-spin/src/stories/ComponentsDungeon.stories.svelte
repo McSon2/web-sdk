@@ -19,7 +19,7 @@
 
 <Story name="Background">
 	{#snippet template()}
-		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
+		<StoryPixiApp {assets} background="#1a1a2e" width={1200} height={675}>
 			<Dungeon />
 		</StoryPixiApp>
 	{/snippet}

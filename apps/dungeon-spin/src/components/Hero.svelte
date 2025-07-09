@@ -160,8 +160,6 @@
 		const frameWidth = Math.floor(totalWidth / 4) - 10; // 4 colonnes avec marge
 		const frameHeight = Math.floor(totalHeight / 4); // 4 lignes
 		
-		console.log('Texture dimensions:', { totalWidth, totalHeight, frameWidth, frameHeight });
-		
 		// Calculer la ligne selon l'animation
 		let row = 0;
 		switch (animationName) {

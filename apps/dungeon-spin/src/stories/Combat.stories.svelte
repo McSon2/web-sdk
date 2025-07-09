@@ -41,11 +41,8 @@
 			<!-- Arrière-plan -->
 			<Dungeon />
 			
-			<!-- Container avec échelle pour le contenu du combat -->
+			<!-- Container avec échelle pour les monstres -->
 			<Container scale={{ x: 0.3, y: 0.3 }}>
-				<!-- Héros avec position personnalisée -->
-				<Hero x={600} y={1620} />
-				
 				<!-- Monstre (retourné pour faire face au héros) -->
 				<Monster
 					id="goblin-1"
@@ -56,9 +53,14 @@
 					damage={10}
 					reward={1}
 					x={1500}
-					y={1680}
+					y={1780}
 					flipX={true}
 				/>
+			</Container>
+			
+			<!-- Héros avec échelle personnalisée plus grande -->
+			<Container scale={{ x: 1, y: 1 }}>
+				<Hero x={200} y={500} />
 			</Container>
 			
 			<!-- Système de combat -->
@@ -71,48 +73,3 @@
 	{/snippet}
 </Story>
 
-<Story name="Combat Room 3 - Medium Monster">
-	{#snippet template()}
-		<StoryPixiApp {assets} background="#1a1a2e" width={800} height={600}>
-			<!-- Arrière-plan -->
-			<Dungeon />
-			
-			<!-- Container avec échelle pour le contenu du combat -->
-			<Container scale={{ x: 0.3, y: 0.3 }}>
-				<!-- Héros avec position personnalisée -->
-				<Hero x={600} y={1620} />
-				
-				<!-- Monstre (retourné pour faire face au héros) -->
-				<Monster
-					id="orc-1"
-					monsterType="orc"
-					size="medium"
-					health={80}
-					maxHealth={80}
-					damage={18}
-					reward={2}
-					x={1500}
-					y={1680}
-					flipX={true}
-				/>
-			</Container>
-			
-			<!-- Système de combat -->
-			<Combat
-				isActive={true}
-				roomNumber={3}
-				monsters={[{
-					id: 'orc-1',
-					type: 'orc',
-					size: 'medium',
-					health: 80,
-					maxHealth: 80,
-					damage: 18,
-					reward: 2,
-					position: { x: 580, y: 380 },
-					state: 'idle'
-				}]}
-			/>
-		</StoryPixiApp>
-	{/snippet}
-</Story>

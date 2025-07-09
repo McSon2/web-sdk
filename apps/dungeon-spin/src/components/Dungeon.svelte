@@ -7,6 +7,7 @@
 	
 	// État local du donjon
 	let show = $state(true);
+	
 </script>
 
 {#if show}
@@ -14,7 +15,7 @@
 		<!-- Arrière-plan du donjon -->
 		{#if context.stateApp?.loadedAssets?.background}
 			<Sprite
-				key={config.assets.background}
+				key="background"
 				anchor={{ x: 0, y: 0 }}
 				width={config.canvas.width}
 				height={config.canvas.height}

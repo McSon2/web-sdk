@@ -196,7 +196,7 @@
 	<Container x={position.x} y={position.y} scale={scale}>
 		<!-- Container pour le flip -->
 		<Container scale={{ x: flipX ? -1 : 1, y: 1 }}>
-			{#if spriteTexture}
+			{#if spriteTexture && context.stateApp?.loadedAssets?.[spriteTexture]}
 				<Sprite
 					key={spriteTexture}
 					anchor={{ x: 0.5, y: 1 }}
